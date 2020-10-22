@@ -33,11 +33,14 @@ export default class DayView extends React.PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const width = nextProps.width - LEFT_MARGIN;
-    this.setState({
-      packedEvents: populateEvents(nextProps.events, width, nextProps.start),
-    });
+  static getDerivedStateFromProps(props, state) {
+    if (props.width !== state.packedEvents.width) {
+      const width = props.width - LEFT_MARGIN;
+      return {
+        packedEvents: populateEvents(props.events, width, props.start),
+      };
+    }
+    return null;
   }
 
   componentDidMount() {
@@ -156,15 +159,14 @@ export default class DayView extends React.PureComponent {
       return (
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() =>
-            this._onEventTapped(this.props.events[event.index])
-          }
-          key={i} style={[styles.event, style, event.color && eventColor]}
+          onPress={() => this._onEventTapped(this.props.events[event.index])}
+          key={i}
+          style={[styles.event, style, event.color && eventColor]}
         >
           {this.props.renderEvent ? (
             this.props.renderEvent(event)
           ) : (
-            <View>
+            <View style={this.props.eventContainer}>
               <Text numberOfLines={1} style={styles.eventTitle}>
                 {event.title || 'Event'}
               </Text>
@@ -182,17 +184,13 @@ export default class DayView extends React.PureComponent {
                   {moment(event.end).format(formatTime)}
                 </Text>
               ) : null}
-              </View>
+            </View>
           )}
         </TouchableOpacity>
       );
     });
 
-    return (
-      <View>
-        <View style={{ marginLeft: LEFT_MARGIN }}>{events}</View>
-      </View>
-    );
+    return <View style={{ marginLeft: LEFT_MARGIN }}>{events}</View>;
   }
 
   render() {

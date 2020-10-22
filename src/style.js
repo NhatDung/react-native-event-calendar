@@ -13,7 +13,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
     },
     contentStyle: {
       backgroundColor: '#ffff',
-      height: calendarHeight + 10,
+      height: calendarHeight + 30,
       ...theme.contentStyle,
     },
     header: {
@@ -53,13 +53,9 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       borderColor: '#DDE5FD',
       borderWidth: 1,
       borderRadius: 5,
-      paddingLeft: 4,
+      padding: 5,
       minHeight: 25,
       flex: 1,
-      paddingTop: 5,
-      paddingBottom: 0,
-      flexDirection: 'column',
-      alignItems: 'flex-start',
       overflow: 'hidden',
       ...theme.event,
     },
@@ -84,10 +80,12 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       ...theme.eventTimes,
     },
     line: {
-      height: 1,
       position: 'absolute',
       left: leftMargin,
-      backgroundColor: 'rgb(216,216,216)',
+      borderWidth: 1,
+      borderStyle: 'dotted',
+      borderRadius: 0.5,
+      borderColor: 'rgb(216,216,216)',
       ...theme.line,
     },
     lineNow: {
